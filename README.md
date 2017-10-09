@@ -1,4 +1,4 @@
-# Audius
+# Rainbow
 
 - Utilizes AcoustID audio recognition service
 
@@ -9,9 +9,9 @@
 
 - **This tool works only with Python 3**
 
-- Download and extract the [zip file](https://github.com/mihirpathak97/Audius/archive/master.zip) from master branch.
+- Download and extract the [zip file](https://github.com/mihirpathak97/Rainbow/archive/master.zip) from master branch.
 
-- For all available options, run `python audius.py --help`.
+- For all available options, run `python rainbow.py --help`.
 
 ```
 usage: audius.py [-h] [-d DIRECTORY] [-f] [-fm]
@@ -30,7 +30,7 @@ optional arguments:
 
 ### Recognize all songs in a directory
 
-- Open up `cmd` and run `python audius.py -d path-to-your-directory`.
+- Open up `cmd` and run `python rainbow.py -d path-to-your-directory`.
 
 - This will then check all the songs in the directory [`.mp3` only] and try to recognize it.
 

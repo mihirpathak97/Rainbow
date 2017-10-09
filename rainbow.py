@@ -1,4 +1,4 @@
-# Audius v0.2
+# Rainbow v0.2
 # Copyright 2017, Mihir Pathak.
 #
 # Permission is hereby granted, free of charge, to any person obtaining
@@ -38,11 +38,11 @@ MAX_AUDIO_LENGTH = 120 # Seconds.
 
 # Exceptions.
 
-class audiusError(Exception):
+class rainbowError(Exception):
     """Base for exceptions in this module."""
 
 
-class FingerprintGenerationError(audiusError):
+class FingerprintGenerationError(rainbowError):
     """The audio could not be fingerprinted."""
 
 
@@ -51,11 +51,11 @@ class NoBackendError(FingerprintGenerationError):
     fpcalc command-line tool is not found."""
 
 
-class FingerprintSubmissionError(audiusError):
+class FingerprintSubmissionError(rainbowError):
     """Missing required data for a fingerprint submission."""
 
 
-class WebServiceError(audiusError):
+class WebServiceError(rainbowError):
     """The Web service request failed. The field ``message`` contains a
     description of the error. If this is an error that was specifically
     sent by the acoustid server, then the ``code`` field contains the
@@ -289,4 +289,4 @@ if __name__ == '__main__':
         print("List of skipped files (if any) is stored in 'skipped.txt'")
 
     else:
-        print('Directory missing!\nExecute `audius.py -h` for instructions')
+        print('Directory missing!\nExecute `rainbow.py -h` for instructions')
