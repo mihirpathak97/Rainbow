@@ -13,12 +13,14 @@
 
 - Download and extract the [zip file](https://github.com/mihirpathak97/Rainbow/archive/master.zip) from master branch.
 
+- Install required libraries by running `pip install -U -r requirements.txt`
+
 - For all available options, run `python rainbow.py --help`.
 
 ```
 usage: rainbow.py [-h] [-d DIRECTORY] [-f] [-fm]
 
-Recognise unknown audio files and fix metadata
+Recognize unknown audio files and fix metadata
 
 optional arguments:
   -h, --help            show this help message and exit
