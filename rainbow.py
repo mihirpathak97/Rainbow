@@ -259,10 +259,12 @@ if __name__ == '__main__':
         for audio_file in os.listdir(directory):
             if os.path.splitext(audio_file)[-1] == '.mp3':
                 total +=1
+                audio_file = os.path.join(directory, audio_file)
                 results = match(API_KEY, audio_file)
                 time.sleep(0.35) # only 3 requests per second
                 done = False
                 if results is not None:
+                    done = True
                     for score, rid, title, artist in results:
                         if title and artist is not None:
                             number+=1
@@ -272,7 +274,6 @@ if __name__ == '__main__':
                                     done = True
                                 else:
                                     done = False
-                            done = True
                             break
                         else:
                             continue
