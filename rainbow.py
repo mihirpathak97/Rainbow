@@ -1,4 +1,4 @@
-# Rainbow v0.2
+# Rainbow v0.2.1
 # Copyright 2017, Mihir Pathak.
 
 from __future__ import division
