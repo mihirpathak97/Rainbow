@@ -4,6 +4,8 @@
 
 - Can recognize unknown audio files and also set their ID3 metadata
 
+- Based on [pyacoustid](https://github.com/beetbox/pyacoustid)
+
 
 ## Installation & Usage
 
@@ -14,7 +16,7 @@
 - For all available options, run `python rainbow.py --help`.
 
 ```
-usage: audius.py [-h] [-d DIRECTORY] [-f] [-fm]
+usage: rainbow.py [-h] [-d DIRECTORY] [-f] [-fm]
 
 Recognise unknown audio files and fix metadata
 
@@ -36,7 +38,7 @@ optional arguments:
 
 - If you don't specify directory, the script will assume a default value of `sys.path[0]`, i.e where you are invoking the script
 
-- List of all skipped audio files will be stored in `skipped.txt` at the root of the code base
+- List of all skipped audio files will be stored in `skipped.txt`
 
 
 ### Fixing ID3 MetaData
@@ -48,4 +50,4 @@ optional arguments:
 
 ## License
 
-- Licensed under `The Apache License`
+- Licensed under `The Apache License, Version 2.0`
