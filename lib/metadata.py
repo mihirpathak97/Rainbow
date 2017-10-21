@@ -46,11 +46,10 @@ def generate_metadata(path, title, artist):
     meta_tags[u'total_tracks'] = album['tracks']['total']
 
     if meta_tags is None:
-        print('Could not find metadata')
+        print('Could not find metadata...')
         return False
 
     """Embed metadata to MP3 files."""
-    # EasyID3 is fun to use ;)
     audiofile = EasyID3(path)
     audiofile['artist'] = meta_tags['artists'][0]['name']
     audiofile['albumartist'] = meta_tags['artists'][0]['name']
