@@ -278,11 +278,11 @@ if __name__ == '__main__':
                         else:
                             continue
                     if not done:
-                        fo = open('skipped.txt', 'a')
+                        fo = open(os.path.join(directory, 'skipped.txt'), 'a')
                         fo.write(audio_file + '\n')
                         fo.close()
                 else:
-                    fo = open('skipped.txt', 'a')
+                    fo = open(os.path.join(directory, 'skipped.txt'), 'a')
                     fo.write(audio_file + '\n')
                     fo.close()
         print("finished querying {0} audio files in directory".format(total))
