@@ -1,0 +1,35 @@
+language: python
+python: "3.6"
+
+# Job for building
+jobs:
+  include:
+    - if: branch = audius-mod
+      os: linux
+      dist: trusty
+    - if: branch = audius-mod
+      os: osx
+      osx_image: xcode9.3
+
+# S3 Deploy 
+deploy: 
+  provider: s3
+  access_key_id: "AKIAJQVWOER2UGVDXHBQ"
+  secret_access_key: "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"
+  bucket: "audius-releases"
+  skip_cleanup: true 
+  acl: public_read
+  region: ap-south-1
+  local_dir: dist
+  upload-dir: rainbow/$TRAVIS_OS_NAME
+ 
+after_deploy: 
+  - echo "Finished uploading artifacts" 
+
+# Install dependencies
+install:
+  - pip install -U -r requirments.txt
+
+# Perform build
+script:
+  - pyinstaller rainbow.py
