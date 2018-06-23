@@ -28,7 +28,7 @@ after_deploy:
 
 # Install dependencies
 install:
-  - pip install -U -r requirments.txt
+  - pip install -U -r requirements.txt
 
 # Perform build
 script:
