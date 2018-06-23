@@ -1,3 +1,4 @@
 spotipy >= 2.4.4
 mutagen >= 1.37
 titlecase >= 0.10.0
+pyinstaller >= 3.3.1
