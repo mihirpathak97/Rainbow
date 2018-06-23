@@ -22,6 +22,8 @@ deploy:
   region: ap-south-1
   local_dir: dist
   upload-dir: rainbow/$TRAVIS_OS_NAME
+  on: 
+    branch: audius-mod
  
 after_deploy: 
   - echo "Finished uploading artifacts" 
