@@ -16,15 +16,16 @@ def generate_token():
     return token
 
 
-def generate_metadata(path, title, artist):
+def generate_and_embed_metadata(path, id):
     """Fetch a song's metadata from Spotify."""
     # token is required to grab metadata
     token = generate_token()
     spotify = spotipy.Spotify(auth=token)
     try:
-        meta_tags = spotify.search(title + ' ' + artist, limit=1)['tracks']['items'][0]
+        meta_tags = spotify.track(id)
     except:
-        return False
+        print("Error generating metadata from Spotify")
+        return
     artist = spotify.artist(meta_tags['artists'][0]['id'])
     album = spotify.album(meta_tags['album']['id'])
 
@@ -46,8 +47,8 @@ def generate_metadata(path, title, artist):
     meta_tags[u'total_tracks'] = album['tracks']['total']
 
     if meta_tags is None:
-        print('Could not find metadata...')
-        return False
+        print("Invalid metadata!")
+        return
 
     """Embed metadata to MP3 files."""
     audiofile = EasyID3(path)
@@ -84,5 +85,5 @@ def generate_metadata(path, title, artist):
     except IndexError:
         pass
     audiofile.save(v2_version=3)
-    print('Fixed metadata...')
-    return True
+    print('Fixed metadata!')
+    return
