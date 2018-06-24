@@ -1,55 +1,21 @@
-# Rainbow
+# Rainbow [Audius Mod]
 
-- Utilizes AcoustID audio recognition service
-
-- Can recognize unknown audio files and also set their ID3 metadata
-
-- Based on [pyacoustid](https://github.com/beetbox/pyacoustid)
-
+A very tiny module to write ID3 tags into audio files. Used in [Audius]() as a pre-built binary
 
 ## Installation & Usage
 
 - **This tool works only with Python 3**
 
-- Download and extract the [zip file](https://github.com/mihirpathak97/Rainbow/archive/master.zip) from master branch.
-
-- Install required libraries by running `pip install -U -r requirements.txt`
-
-- For all available options, run `python rainbow.py --help`.
+- Download and extract the [zip file](https://github.com/mihirpathak97/Rainbow/archive/audius-mod.zip) from "audius-mod" branch.
 
 ```
-usage: rainbow.py [-h] [-d DIRECTORY] [-f] [-fm]
+usage: rainbow.py [-h] [-f FILE] [-id ID]
 
-Recognize unknown audio files and fix metadata
+Embed metadata into audio files using spotify API
 
 optional arguments:
   -h, --help            show this help message and exit
-  -d DIRECTORY, --directory DIRECTORY
-                        Directory in which you want to perform audio
-                        fingerprinting
-  -f                    Perform audio fingerprinting. Default=True
-  -fm                   Fix metadata after recognition. Default=False
+  -f FILE, --file FILE  Absolute path of audio file
+  -id ID                Spotify ID of song
 
 ```
-
-### Recognize all songs in a directory
-
-- Open up `cmd` and run `python rainbow.py -d path-to-your-directory`.
-
-- This will then check all the songs in the directory [`.mp3` only] and try to recognize it.
-
-- If you don't specify directory, the script will assume a default value of `sys.path[0]`, i.e where you are invoking the script
-
-- List of all skipped audio files will be stored in `skipped.txt`
-
-
-### Fixing ID3 MetaData
-
-- To embed proper metadata for the songs, just add `-fm` option when running the script
-
-- The script will then try to find the song in Spotify and embed the details to the file
-
-
-## License
-
-- Licensed under `The Apache License, Version 2.0`
