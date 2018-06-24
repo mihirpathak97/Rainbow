@@ -9,7 +9,7 @@ install:
 build_script:
   - "%PYTHON%/python.exe setup.py build"
 
-artifact:
+artifacts:
   - path: build
 
 deploy:
