@@ -33,6 +33,16 @@ install:
 script:
   - python setup.py build
 
+
+# Zip files before deploy
+before_deploy:
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+      zip -r dist/darwin.zip build/ -x "*.DS_Store"
+    fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      zip -r dist/linux.zip build/
+    fi
+
 # S3 Deploy
 deploy:
   provider: s3
@@ -42,8 +52,8 @@ deploy:
   skip_cleanup: true
   acl: public_read
   region: ap-south-1
-  local_dir: build
-  upload-dir: audius/binaries/rainbow/$TRAVIS_OS_NAME
+  local_dir: dist
+  upload-dir: audius/binaries/rainbow
   on:
     branch: audius-mod
 
