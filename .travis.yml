@@ -44,6 +44,7 @@ before_deploy:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
       zip -r ../dist/linux.zip .;
     fi
+  - cd ../
 
 # S3 Deploy
 deploy:
