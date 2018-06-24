@@ -6,6 +6,15 @@ environment:
 install:
   - "%PYTHON%/Scripts/pip.exe install -U -r requirements.txt"
 
-script:
+build_script:
   - "%PYTHON%/python.exe setup.py build"
 
+provider: S3
+    access_key_id:
+      secure: AKIAJQVWOER2UGVDXHBQ
+    secret_access_key:
+      secure: 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
+    bucket: mihirpathak
+    folder: audius/binaries/rainbow/win32
+    artifact: build
+    set_public: true
