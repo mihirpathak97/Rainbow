@@ -37,11 +37,12 @@ script:
 # Zip files before deploy
 before_deploy:
   - mkdir dist
+  - cd build
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-      zip -r dist/darwin.zip build/ -x "*.DS_Store";
+      zip -r ../dist/darwin.zip . -x "*.DS_Store";
     fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-      zip -r dist/linux.zip build/;
+      zip -r ../dist/linux.zip .;
     fi
 
 # S3 Deploy
