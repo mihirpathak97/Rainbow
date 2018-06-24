@@ -36,6 +36,7 @@ script:
 
 # Zip files before deploy
 before_deploy:
+  - mkdir dist
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
       zip -r dist/darwin.zip build/ -x "*.DS_Store";
     fi
