@@ -55,7 +55,7 @@ deploy:
   local_dir: dist
   upload-dir: audius/binaries/rainbow
   on:
-    branch: audius-mod
+    all_branches: true
 
 after_deploy:
   - echo "Finished uploading artifacts"
