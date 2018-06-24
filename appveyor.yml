@@ -11,14 +11,5 @@ install:
 build_script:
   - "%PYTHON%/python.exe setup.py build"
 
-deploy:
-- provider: S3
-  access_key_id: AKIAJQVWOER2UGVDXHBQ
-  secret_access_key:
-    secure: D/UnXtSu9yk4X0929t2WCfBUWEQ7K1LpVP6IWrkfXbUFM8sTtH47USMQasSSGjSy
-  region: ap-south-1
-  bucket: mihirpathak
-  folder: audius/binaries/rainbow/win32
-  artifact: build
-  unzip: &1931112681 true
-  set_public: true
+artifacts:
+  - path: build
