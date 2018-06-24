@@ -1,12 +1,12 @@
 # Job for building
 jobs:
   include:
-    - if: branch = audius-mod
+    - if: tag IS present
       os: linux
       language: python
       python: "3.6"
       dist: trusty
-    - if: branch = audius-mod
+    - if: tag IS present
       os: osx
       language: generic
       env: PYTHON=3.6.5

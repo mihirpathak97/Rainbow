@@ -1,5 +1,7 @@
 image: Visual Studio 2015
 
+appveyor_repo_tag: true
+
 environment:
   PYTHON: "C:\\Python36-x64"
 
