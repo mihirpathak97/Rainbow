@@ -16,6 +16,8 @@ deploy:
     secret_access_key:
       secure: ErDuCdCkgqC4kWyam/f+sIYx03mwZRPjHKCUNlUZ
     bucket: mihirpathak
+    region: ap-south-1
+    unzip: true
     folder: audius/binaries/rainbow/win32
     artifact: build
     set_public: true
