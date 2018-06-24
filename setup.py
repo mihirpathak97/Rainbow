@@ -8,7 +8,7 @@ build_exe_options = {"packages": packages, "excludes": ["tkinter"], "build_exe":
 
 setup(  
   name = "rainbow",
-  version = "1.0.2",
+  version = "1.0.3",
   description = "A very tiny module to embed ID3 metadata",
   options = {"build_exe": build_exe_options},
   executables = [Executable("rainbow.py")]
