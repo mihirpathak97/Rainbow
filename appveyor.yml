@@ -9,7 +9,8 @@ install:
 build_script:
   - "%PYTHON%/python.exe setup.py build"
 
-provider: S3
+deploy:
+  provider: S3
     access_key_id:
       secure: AKIAJQVWOER2UGVDXHBQ
     secret_access_key:
