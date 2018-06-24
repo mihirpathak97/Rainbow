@@ -1,32 +1,29 @@
-language: python
-python: "3.6"
-
 # Job for building
 jobs:
   include:
     - if: branch = audius-mod
       os: linux
+      language: python
+      python: "3.6"
       dist: trusty
     - if: branch = audius-mod
       os: osx
-      osx_image: xcode9.3
+      language: generic
+      env: PYTHON=3.6.5
 
-# S3 Deploy 
-deploy: 
-  provider: s3
-  access_key_id: "AKIAJQVWOER2UGVDXHBQ"
-  secret_access_key: "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"
-  bucket: "audius-releases"
-  skip_cleanup: true 
-  acl: public_read
-  region: ap-south-1
-  local_dir: dist
-  upload-dir: rainbow/$TRAVIS_OS_NAME
-  on: 
-    branch: audius-mod
- 
-after_deploy: 
-  - echo "Finished uploading artifacts" 
+before_install: |
+  if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+    brew update
+    brew install openssl readline
+    brew outdated pyenv || brew upgrade pyenv
+    brew install pyenv-virtualenv
+    pyenv install $PYTHON
+    export PYENV_VERSION=$PYTHON
+    export PATH="/Users/travis/.pyenv/shims:${PATH}"
+    pyenv-virtualenv venv
+    source venv/bin/activate
+    python --version
+  fi
 
 # Install dependencies
 install:
@@ -34,4 +31,21 @@ install:
 
 # Perform build
 script:
-  - pyinstaller rainbow.py
+  - python setup.py build
+
+# S3 Deploy
+deploy:
+  provider: s3
+  access_key_id: "AKIAJQVWOER2UGVDXHBQ"
+  secret_access_key: "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"
+  bucket: "mihirpathak"
+  skip_cleanup: true
+  acl: public_read
+  region: ap-south-1
+  local_dir: build
+  upload-dir: audius/binaries/rainbow/v0.1/$TRAVIS_OS_NAME
+  on:
+    branch: audius-mod
+
+after_deploy:
+  - echo "Finished uploading artifacts"
