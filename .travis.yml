@@ -31,19 +31,20 @@ install:
 
 # Perform build
 script:
-  - python setup.py build
+  - pyinstaller rainbow.py
 
 
 # Zip files before deploy
 before_deploy:
-  - mkdir dist
-  - cd build
+  - cd dist/rainbow
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-      zip -r ../dist/darwin.zip . -x "*.DS_Store";
+      zip -r ../darwin.zip . -x "*.DS_Store";
     fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-      zip -r ../dist/linux.zip .;
+      zip -r ../linux.zip .;
     fi
+  - cd ../
+  - rm -r rainbow/
   - cd ../
 
 # S3 Deploy
