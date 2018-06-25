@@ -9,7 +9,7 @@ install:
   - "%PYTHON%/Scripts/pip.exe install -U -r requirements.txt"
 
 build_script:
-  - "pyinstaller rainbow.py"
+  - "%PYTHON%/Scripts/pyinstaller.exe rainbow.py"
 
 artifacts:
   - path: dist/rainbow
