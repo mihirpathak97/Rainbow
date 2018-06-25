@@ -1,4 +1,4 @@
 spotipy >= 2.4.4
 mutagen >= 1.37
 titlecase >= 0.10.0
-cx_Freeze == 5.1.1
+PyInstaller >= 3.3.1
