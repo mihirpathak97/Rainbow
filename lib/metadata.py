@@ -16,7 +16,7 @@ def generate_token():
     return token
 
 
-def generate_and_embed_metadata(path, id):
+def generate_and_embed_metadata(music_file, id):
     """Fetch a song's metadata from Spotify."""
     # token is required to grab metadata
     token = generate_token()
@@ -24,7 +24,7 @@ def generate_and_embed_metadata(path, id):
     try:
         meta_tags = spotify.track(id)
     except:
-        print("Error generating metadata from Spotify")
+        print("Error requesting form Spotify API")
         return
     artist = spotify.artist(meta_tags['artists'][0]['id'])
     album = spotify.album(meta_tags['album']['id'])
@@ -47,11 +47,19 @@ def generate_and_embed_metadata(path, id):
     meta_tags[u'total_tracks'] = album['tracks']['total']
 
     if meta_tags is None:
-        print("Invalid metadata!")
+        print("Could not generate metadata")
         return
 
+    if music_file.endswith('.mp3'):
+        return embed_mp3(music_file, meta_tags)
+    elif music_file.endswith('.m4a'):
+        return embed_m4a(music_file, meta_tags)
+
+
+
+def embed_mp3(music_file, meta_tags):
     """Embed metadata to MP3 files."""
-    audiofile = EasyID3(path)
+    audiofile = EasyID3(music_file)
     audiofile['artist'] = meta_tags['artists'][0]['name']
     audiofile['albumartist'] = meta_tags['artists'][0]['name']
     audiofile['album'] = meta_tags['album']['name']
@@ -76,7 +84,7 @@ def generate_and_embed_metadata(path, id):
     if meta_tags['isrc']:
         audiofile['isrc'] = meta_tags['external_ids']['isrc']
     audiofile.save(v2_version=3)
-    audiofile = ID3(path)
+    audiofile = ID3(music_file)
     try:
         albumart = urllib.request.urlopen(meta_tags['album']['images'][0]['url'])
         audiofile["APIC"] = APIC(encoding=3, mime='image/jpeg', type=3,
@@ -85,5 +93,49 @@ def generate_and_embed_metadata(path, id):
     except IndexError:
         pass
     audiofile.save(v2_version=3)
-    print('Fixed metadata!')
-    return
+    return print("Finished fixing metadata")
+
+def embed_m4a(music_file, meta_tags):
+    """Embed metadata to M4A files."""
+    # Apple has specific tags - see mutagen docs -
+    # http://mutagen.readthedocs.io/en/latest/api/mp4.html
+    tags = {'album': '\xa9alb',
+            'artist': '\xa9ART',
+            'date': '\xa9day',
+            'title': '\xa9nam',
+            'originaldate': 'purd',
+            'comment': '\xa9cmt',
+            'group': '\xa9grp',
+            'writer': '\xa9wrt',
+            'genre': '\xa9gen',
+            'tracknumber': 'trkn',
+            'albumartist': 'aART',
+            'disknumber': 'disk',
+            'cpil': 'cpil',
+            'albumart': 'covr',
+            'copyright': 'cprt',
+            'tempo': 'tmpo'}
+
+    audiofile = MP4(music_file)
+    audiofile[tags['artist']] = meta_tags['artists'][0]['name']
+    audiofile[tags['albumartist']] = meta_tags['artists'][0]['name']
+    audiofile[tags['album']] = meta_tags['album']['name']
+    audiofile[tags['title']] = meta_tags['name']
+    audiofile[tags['tracknumber']] = [(meta_tags['track_number'],
+                                       meta_tags['total_tracks'])]
+    audiofile[tags['disknumber']] = [(meta_tags['disc_number'], 0)]
+    audiofile[tags['date']] = meta_tags['release_date']
+    audiofile[tags['originaldate']] = meta_tags['release_date']
+    if meta_tags['genre']:
+        audiofile[tags['genre']] = meta_tags['genre']
+    if meta_tags['copyright']:
+        audiofile[tags['copyright']] = meta_tags['copyright']
+    try:
+        albumart = urllib.request.urlopen(meta_tags['album']['images'][0]['url'])
+        audiofile[tags['albumart']] = [MP4Cover(
+            albumart.read(), imageformat=MP4Cover.FORMAT_JPEG)]
+        albumart.close()
+    except IndexError:
+        pass
+    audiofile.save()
+    return print("Finished fixing metadata")
