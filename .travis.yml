@@ -46,19 +46,17 @@ before_deploy:
     fi
   - cd ../
 
-# S3 Deploy
+# Push to github releases
 deploy:
-  provider: s3
-  access_key_id: "$AWS_KEY_ID"
-  secret_access_key: "$AWS_KEY_SECRET"
-  bucket: "mihirpathak"
+  provider: releases
+  api_key: "$GITHUB_TOKE"
+  file_glob: true
+  file: dist/*
   skip_cleanup: true
-  acl: public_read
-  region: ap-south-1
-  local_dir: dist
-  upload-dir: audius/binaries/rainbow
+  draft: true
   on:
-    all_branches: true
+    tags: true
+    
 
 after_deploy:
   - echo "Finished uploading artifacts"
