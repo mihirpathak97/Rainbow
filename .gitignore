@@ -1,5 +1,3 @@
 build/
 dist/
 *pyc
-*spec
-__pycache__
