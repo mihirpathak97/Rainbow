@@ -7,19 +7,20 @@ from mutagen.mp4 import MP4, MP4Cover
 
 import urllib.request
 
-def generate_token():
+
+def generate_token(clientKey, clientSecret):
     """Generate the token. Please respect these credentials :)"""
     credentials = oauth2.SpotifyClientCredentials(
-        client_id='05a27dfaa107438eb78215d18ce0aedc',
-        client_secret='16a88c04b61941b39a1aa3f3f2190e9e')
+        client_id=clientKey,
+        client_secret=clientSecret)
     token = credentials.get_access_token()
     return token
 
 
-def generate_and_embed_metadata(music_file, id):
+def generate_and_embed_metadata(music_file, id, clientKey, clientSecret):
     """Fetch a song's metadata from Spotify."""
     # token is required to grab metadata
-    token = generate_token()
+    token = generate_token(clientKey, clientSecret)
     spotify = spotipy.Spotify(auth=token)
     try:
         meta_tags = spotify.track(id)
@@ -56,7 +57,6 @@ def generate_and_embed_metadata(music_file, id):
         return embed_m4a(music_file, meta_tags)
 
 
-
 def embed_mp3(music_file, meta_tags):
     """Embed metadata to MP3 files."""
     audiofile = EasyID3(music_file)
@@ -86,7 +86,8 @@ def embed_mp3(music_file, meta_tags):
     audiofile.save(v2_version=3)
     audiofile = ID3(music_file)
     try:
-        albumart = urllib.request.urlopen(meta_tags['album']['images'][0]['url'])
+        albumart = urllib.request.urlopen(
+            meta_tags['album']['images'][0]['url'])
         audiofile["APIC"] = APIC(encoding=3, mime='image/jpeg', type=3,
                                  desc=u'Cover', data=albumart.read())
         albumart.close()
@@ -94,6 +95,7 @@ def embed_mp3(music_file, meta_tags):
         pass
     audiofile.save(v2_version=3)
     return print("Finished fixing metadata")
+
 
 def embed_m4a(music_file, meta_tags):
     """Embed metadata to M4A files."""
@@ -131,7 +133,8 @@ def embed_m4a(music_file, meta_tags):
     if meta_tags['copyright']:
         audiofile[tags['copyright']] = meta_tags['copyright']
     try:
-        albumart = urllib.request.urlopen(meta_tags['album']['images'][0]['url'])
+        albumart = urllib.request.urlopen(
+            meta_tags['album']['images'][0]['url'])
         audiofile[tags['albumart']] = [MP4Cover(
             albumart.read(), imageformat=MP4Cover.FORMAT_JPEG)]
         albumart.close()
